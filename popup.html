@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>RIZEN-VPN</title>
+<link rel="stylesheet" href="popup.css">
+</head>
+<body>
+<header>
+  <div class="brand">
+    <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M3 17h18" stroke="#ffc15e" stroke-width="2" stroke-linecap="round"/><path d="M6.5 17a5.5 5.5 0 0 1 11 0" fill="#ff6a4d"/><path d="M12 4v3M4.6 8.6l2 2M19.4 8.6l-2 2" stroke="#ffc15e" stroke-width="1.8" stroke-linecap="round"/></svg>
+    <span>RIZEN-VPN</span>
+  </div>
+  <div id="pill" class="pill off"><i></i><span>Off</span></div>
+</header>
+
+<nav class="tabs" id="tabs">
+  <button data-tab="vpn" class="on">VPN</button>
+  <button data-tab="proxy">Proxy</button>
+  <button data-tab="dns">DNS</button>
+  <button data-tab="safety">Safety</button>
+  <span class="ink"></span>
+</nav>
+
+<main>
+  <!-- VPN -->
+  <section id="tab-vpn" class="panel on">
+    <div class="stage" id="stage">
+      <div class="sky"></div>
+      <div class="sun-clip"><button id="power" class="sun off" aria-label="Connect or disconnect"><span class="halo"></span><span class="ring"></span><span class="disc"></span>
+        <svg viewBox="0 0 24 24" width="30" height="30"><path d="M12 3v8" stroke="#2a1648" stroke-width="2.4" stroke-linecap="round"/><path d="M6.7 6.9a7.5 7.5 0 1 0 10.6 0" fill="none" stroke="#2a1648" stroke-width="2.4" stroke-linecap="round"/></svg>
+      </button></div>
+      <div class="horizon"></div>
+    </div>
+    <h1 id="headline">Not protected</h1>
+    <p id="sub" class="sub">Pick a country and tap the sun.</p>
+
+    <div id="httpWarn" class="warn" hidden>This page uses plain HTTP. The server operator can read and change it. Don't enter passwords here.</div>
+    <button id="unblock" class="ghost wide" hidden>Turn protection off and go direct</button>
+    <div class="picker">
+      <button id="countryBtn" class="field"><b class="code" id="curCode">IN</b><span id="curName">India</span><svg viewBox="0 0 24 24" width="16" height="16"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+      <div id="countryMenu" class="menu">
+        <input id="search" placeholder="Search country" autocomplete="off">
+        <div id="countryList"></div>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div><small>Your IP</small><b id="stIp">—</b></div>
+      <div><small>Speed</small><b id="stMs">—</b></div>
+      <div><small>Time</small><b id="stTime">00:00:00</b></div>
+    </div>
+
+    <label class="row"><span><b>TCP mode</b><small>SOCKS5 servers only (pure TCP tunnel)</small></span><input type="checkbox" id="tcp"><i class="sw"></i></label>
+    <label class="row"><span><b>Google Play proxy</b><small>Routes only Play Store traffic</small></span><input type="checkbox" id="play"><i class="sw"></i></label>
+  </section>
+
+  <!-- PROXY -->
+  <section id="tab-proxy" class="panel">
+    <h2>Your own proxy</h2>
+    <p class="sub left">Use a proxy you trust, such as your own server or a paid provider. Servers that need a login are not supported, so no passwords are ever handled.</p>
+    <div class="seg" id="scheme">
+      <button data-v="http" class="on">HTTP</button><button data-v="https-tls">HTTPS</button><button data-v="socks5">SOCKS5</button>
+    </div>
+    <div class="grid2">
+      <input id="pHost" class="field" placeholder="IPv4 or domain" maxlength="253" spellcheck="false">
+      <input id="pPort" class="field" placeholder="Port" inputmode="numeric" maxlength="5">
+    </div>
+    <button id="pGo" class="cta">Connect proxy</button>
+    <p id="pMsg" class="note"></p>
+  </section>
+
+  <!-- DNS -->
+  <section id="tab-dns" class="panel">
+    <h2>Secure DNS</h2>
+    <p class="sub left">Chrome only lets you set DNS in its own settings. Pick a provider, copy it, and RIZEN opens the right page for you.</p>
+    <div id="dnsList"></div>
+    <div class="grid2">
+      <button id="dnsBench" class="ghost">Test speed</button>
+      <button id="dnsApply" class="cta small">Copy &amp; open settings</button>
+    </div>
+    <p id="dnsMsg" class="note"></p>
+  </section>
+
+  <!-- SAFETY -->
+  <section id="tab-safety" class="panel">
+    <h2>Leak test</h2>
+    <p class="sub left">Checks your IP, IPv6, WebRTC, DNS and what happens if the server drops. Browsing pauses for a second or two.</p>
+    <button id="testGo" class="cta">Run leak test</button>
+    <div id="results"></div>
+    <details class="priv">
+      <summary>Privacy notice</summary>
+      <ul>
+        <li><b>Free servers are run by strangers.</b> They can see which sites you connect to, and anything on plain HTTP pages. HTTPS content stays encrypted. Never log in to banking or email through them.</li>
+        <li>Server lists come from Geonode, Proxifly (GitHub / jsDelivr) and ProxyScrape. Those sites see your real IP when the list is fetched.</li>
+        <li>Each server is checked with Cloudflare and Google test pages. One check is made before connecting, directly, to learn your real IP so leaks can be detected. It stays in memory and is cleared when you disconnect.</li>
+        <li>DNS tests contact the provider you pick. Nothing is sent to RIZEN-VPN or any analytics service.</li>
+        <li>Saved on this device only: your settings, the connection state and a short-lived server list.</li>
+      </ul>
+    </details>
+    <label class="row"><span><b>Allow free public servers</b><small>Turn off to use only your own proxy</small></span><input type="checkbox" id="consentToggle"><i class="sw"></i></label>
+  </section>
+</main>
+
+<footer>Free public servers. Speed and uptime vary.</footer>
+<div id="consent" class="consent" hidden>
+  <div>
+    <h2>Before you connect</h2>
+    <ul>
+      <li>Free servers are public and run by strangers. They can see the sites you visit and anything sent over plain HTTP.</li>
+      <li>RIZEN checks every server, blocks traffic if it fails, and never uses your passwords. It can't make an untrusted server trustworthy.</li>
+      <li>Avoid banking and email logins. Full details are in the Safety tab.</li>
+    </ul>
+    <button id="cYes" class="cta">I understand, use free servers</button>
+    <button id="cNo" class="ghost wide">Not now, I'll use my own proxy</button>
+  </div>
+</div>
+<script type="module" src="popup.js"></script>
+</body>
+</html>
