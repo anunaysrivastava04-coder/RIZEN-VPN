@@ -5,7 +5,7 @@ A Chrome Manifest V3 browser proxy extension with country selection, proxy check
 > **Security & privacy disclaimer:** RIZEN-VPN is a browser proxy extension—not a device-wide VPN. It does not itself encrypt traffic. Public proxy operators are untrusted. Do not use public proxies for sensitive accounts or confidential activity. HTTPS protects content in transit to the destination, but proxy operators may still observe connection metadata.
 
 
-DOWNLOAD LINK === https://github.com/anunaysrivastava04-coder/RIZEN-VPN/blob/main/rizen-vpn%20(2).zip
+DOWNLOAD LINK === https://github.com/anunaysrivastava04-coder/RIZEN-VPN/blob/main/RIZEN-VPN%20V1.zip
 
 
 
